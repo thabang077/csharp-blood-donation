@@ -31,7 +31,7 @@ var app = builder.Build();
 
 app.UseCors(options => options.WithOrigins("" +
     "http://localhost:3000",
-    "http://bloodtypeapi.runasp.net"
+    "https://bloodtypeapi.runasp.net"
     )
 .AllowAnyHeader()
 .AllowAnyMethod());
