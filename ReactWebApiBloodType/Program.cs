@@ -11,9 +11,16 @@ builder.Services.AddControllers();
 
 builder.Services.AddDbContext<DonationDBContext>(options =>
 
-{ 
-options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
-});
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+
+}
+
+
+);
+
+builder.Services.AddCors();
+
 
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -22,13 +29,22 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
+app.UseCors(options => options.WithOrigins("" +
+    "http://localhost:3000",
+    "http://bloodtypeapi.runasp.net"
+    )
+.AllowAnyHeader()
+.AllowAnyMethod());
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+  
 
+app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
